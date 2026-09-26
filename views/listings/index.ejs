@@ -1,0 +1,632 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  :root {
+    --red: #ff385c;
+    --black: #222;
+    --gray: #717171;
+    --border: #ddd;
+  }
+
+  body {
+    background: #fff;
+    color: var(--black);
+  }
+
+  .airbnb-index {
+    max-width: 1600px;
+    margin: auto;
+    padding: 0 24px 60px;
+  }
+
+  /* Categories */
+  #filters {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    overflow-x: auto;
+    padding: 10px 4px 8px;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  #filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter {
+    flex: 0 0 auto;
+    min-width: 64px;
+    text-align: center;
+    padding: 4px 2px 8px;
+    color: var(--gray);
+    opacity: .8;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: .2s;
+  }
+
+  .filter:hover {
+    color: var(--black);
+    opacity: 1;
+    border-bottom-color: var(--black);
+  }
+
+  .filter i {
+    display: block;
+    font-size: 21px;
+    margin-bottom: 7px;
+  }
+
+  .filter p {
+    margin: 0 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+  }
+
+  .ic-trending { color: #ff385c; }
+  .ic-rooms { color: #717171; }
+  .ic-cities { color: #fd5c63; }
+  .ic-mountains { color: #8b5a2b; }
+  .ic-castles { color: #8a2be2; }
+  .ic-pools { color: #00a699; }
+  .ic-camping { color: #2e8b57; }
+  .ic-farms { color: #e4a834; }
+  .ic-arctic { color: #00bfff; }
+  .ic-domes { color: #4682b4; }
+  .ic-boats { color: #1e90ff; }
+
+  /* Tax */
+  .tax-toggle {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 8px 13px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+  }
+
+  .tax-toggle label {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--black) !important;
+  }
+
+  .form-switch .form-check-input {
+    width: 2em;
+    height: 1.1em;
+    margin-right: 7px;
+    cursor: pointer;
+  }
+
+  .form-switch .form-check-input:checked {
+    background-color: var(--black);
+    border-color: var(--black);
+  }
+
+  /* Country sections */
+  .country-section {
+    margin-top: 34px;
+  }
+
+  .country-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  .country-heading h2 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 600;
+  }
+
+  .country-heading a {
+    color: var(--black);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* Listings */
+  .listing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px 22px;
+  }
+
+  .listing-card {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .listing-link {
+    display: block;
+    color: var(--black) !important;
+    text-decoration: none !important;
+  }
+
+  .card-img-wrapper {
+    position: relative;
+    aspect-ratio: 1 / .92;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #f2f2f2;
+  }
+
+  .card-img-wrapper > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card-img-top {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    border-radius: 14px !important;
+    transition: transform .25s ease;
+  }
+
+  .listing-card:hover .card-img-top {
+    transform: scale(1.02);
+  }
+
+  /* Wishlist */
+  .wishlist-heart {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+    color: rgba(0, 0, 0, .55);
+    font-size: 20px;
+    -webkit-text-stroke: 1.5px #fff;
+    cursor: pointer;
+    transition: .2s;
+  }
+
+  .wishlist-heart:hover {
+    transform: scale(1.1);
+  }
+
+  .wishlist-heart.active {
+    color: var(--red);
+    -webkit-text-stroke: 0;
+  }
+
+  /* Listing information */
+  .listing-card .card-body {
+    padding: 7px 1px 0 !important;
+  }
+
+  .listing-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .listing-title {
+    min-width: 0;
+    margin: 0 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .listing-rating {
+    flex: 0 0 auto;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .listing-rating i {
+    font-size: 10px;
+  }
+
+  .listing-location {
+    margin: 3px 0 0 !important;
+    color: var(--gray) !important;
+    font-size: 13px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .listing-price {
+    margin: 4px 0 0 !important;
+    font-size: 13.5px !important;
+  }
+
+  .listing-price b {
+    font-weight: 600;
+  }
+
+  .taxInfo {
+    display: none;
+    color: var(--gray);
+    font-size: 12px;
+  }
+
+  /* Empty state */
+  .empty-listings {
+    grid-column: 1 / -1;
+    padding: 70px 20px;
+    text-align: center;
+    color: var(--gray);
+  }
+
+  .empty-listings i {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: var(--black);
+  }
+
+  .empty-listings h3 {
+    color: var(--black);
+    font-size: 21px;
+  }
+
+  .empty-listings p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1199px) {
+    .listing-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .airbnb-index {
+      padding: 0 18px 45px;
+    }
+
+    #filters {
+      gap: 20px;
+    }
+
+    .listing-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px 16px;
+    }
+
+    .country-heading h2 {
+      font-size: 19px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .airbnb-index {
+      padding: 0 14px 40px;
+    }
+
+    .listing-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter {
+      min-width: 58px;
+    }
+
+    .filter i {
+      font-size: 19px;
+    }
+
+    .filter p {
+      font-size: 11px !important;
+    }
+
+    .tax-toggle {
+      padding: 7px 9px;
+    }
+  }
+</style>
+
+
+<div class="airbnb-index">
+
+  <!-- Categories -->
+  <div id="filters">
+
+    <div class="filter" onclick="filterCategory('Trending')">
+      <i class="fa-solid fa-fire ic-trending"></i>
+      <p>Trending</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Rooms')">
+      <i class="fa-solid fa-bed ic-rooms"></i>
+      <p>Rooms</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Iconic Cities')">
+      <i class="fa-solid fa-mountain-city ic-cities"></i>
+      <p>Iconic Cities</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Mountains')">
+      <i class="fa-solid fa-mountain ic-mountains"></i>
+      <p>Mountains</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Castles')">
+      <i class="fa-brands fa-fort-awesome ic-castles"></i>
+      <p>Castles</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Amazing Pools')">
+      <i class="fa-solid fa-person-swimming ic-pools"></i>
+      <p>Amazing Pools</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Camping')">
+      <i class="fa-solid fa-tents ic-camping"></i>
+      <p>Camping</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Farms')">
+      <i class="fa-solid fa-wheat-awn ic-farms"></i>
+      <p>Farms</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Arctic')">
+      <i class="fa-solid fa-snowflake ic-arctic"></i>
+      <p>Arctic</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Domes')">
+      <i class="fa-solid fa-igloo ic-domes"></i>
+      <p>Domes</p>
+    </div>
+
+    <div class="filter" onclick="filterCategory('Boats')">
+      <i class="fa-solid fa-sailboat ic-boats"></i>
+      <p>Boats</p>
+    </div>
+
+    <!-- Tax -->
+    <div class="tax-toggle">
+      <div class="form-check form-switch form-check-reverse m-0">
+
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="switchCheckDefault"
+        >
+
+        <label
+          class="form-check-label"
+          for="switchCheckDefault"
+        >
+          Display After Taxes
+        </label>
+
+      </div>
+    </div>
+
+  </div>
+
+
+ <!-- Country Sections -->
+
+<%
+  const countryGroups = {};
+
+  if (allListings && allListings.length > 0) {
+    for (let listing of allListings) {
+
+      const country =
+        listing.country && listing.country.trim()
+          ? listing.country.trim()
+          : "Other destinations";
+
+      if (!countryGroups[country]) {
+        countryGroups[country] = [];
+      }
+
+      countryGroups[country].push(listing);
+    }
+  }
+
+  const countries = Object.keys(countryGroups);
+%>
+
+
+<% if (countries.length > 0) { %>
+
+  <% for (let country of countries) { %>
+
+    <section class="country-section">
+
+      <div class="country-heading">
+
+        <h2>
+          Popular homes in <%= country %>
+        </h2>
+
+        <% if (countryGroups[country].length >= 5) { %>
+
+          <a href="/listings/<%= countryGroups[country][4]._id %>">
+            Show all
+            <i class="fa-solid fa-chevron-right"></i>
+          </a>
+
+        <% } else if (countryGroups[country].length > 0) { %>
+
+          <a href="/listings/<%= countryGroups[country][0]._id %>">
+            Show all
+            <i class="fa-solid fa-chevron-right"></i>
+          </a>
+
+        <% } %>
+
+      </div>
+
+
+      <div class="listing-grid">
+
+        <% for (let listing of countryGroups[country].slice(0, 4)) { %>
+
+          <div class="listing-item">
+
+            <div class="card listing-card">
+
+                <!-- Image -->
+
+                <div class="card-img-wrapper">
+
+                  <i
+                    class="fa-solid fa-heart wishlist-heart"
+                    onclick="toggleWishlist(this, event)"
+                    title="Add to wishlist"
+                  ></i>
+
+                  <a
+                    href="/listings/<%= listing._id %>"
+                    class="listing-link"
+                  >
+
+                    <img
+                      src="<%= listing.image.url %>"
+                      class="card-img-top"
+                      alt="<%= listing.title %>"
+                      loading="lazy"
+                    >
+
+                  </a>
+
+                </div>
+
+
+                <!-- Details -->
+
+                <a
+                  href="/listings/<%= listing._id %>"
+                  class="listing-link"
+                >
+
+                  <div class="card-body">
+
+                    <div class="listing-header">
+
+                      <h6 class="listing-title">
+                        <%= listing.title %>
+                      </h6>
+
+                      <span class="listing-rating">
+                        <i class="fa-solid fa-star"></i>
+                        4.9
+                      </span>
+
+                    </div>
+
+                    <p class="listing-location">
+                      <%= listing.location %>,
+                      <%= listing.country %>
+                    </p>
+
+                    <p class="listing-price">
+
+                      <b>
+                        Rs.
+                        <%= listing.price.toLocaleString("en-PK") %>
+                      </b>
+
+                      / night
+
+                      <span class="taxInfo">
+                        +18% GST
+                      </span>
+
+                    </p>
+
+                  </div>
+
+                </a>
+
+              </div>
+
+            </div>
+
+          <% } %>
+
+        </div>
+
+      </section>
+
+    <% } %>
+
+
+  <% } else { %>
+
+    <div class="empty-listings">
+
+      <i class="fa-solid fa-house"></i>
+
+      <h3>No listings found</h3>
+
+      <p>
+        Try another category or check back later.
+      </p>
+
+    </div>
+
+  <% } %>
+
+</div>
+
+
+<script>
+
+  // Tax toggle
+
+  const taxSwitch =
+    document.getElementById("switchCheckDefault");
+
+  if (taxSwitch) {
+
+    taxSwitch.addEventListener("change", function () {
+
+      const taxInfo =
+        document.getElementsByClassName("taxInfo");
+
+      for (const info of taxInfo) {
+        info.style.display =
+          taxSwitch.checked ? "inline" : "none";
+      }
+
+    });
+
+  }
+
+
+  // Wishlist
+
+  function toggleWishlist(element, event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    element.classList.toggle("active");
+
+  }
+
+
+  // Category filter
+
+  function filterCategory(categoryName) {
+
+    window.location.href =
+      `/listings?category=${encodeURIComponent(categoryName)}`;
+
+  }
+
+</script>

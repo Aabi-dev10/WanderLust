@@ -1,0 +1,392 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+
+  .edit-page {
+    padding: 35px 15px 70px;
+  }
+
+  .edit-card {
+    max-width: 850px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.06);
+  }
+
+  .edit-body {
+    padding: 38px;
+  }
+
+  .edit-title {
+    color: #222;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+
+  .edit-label {
+    color: #555;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+
+  .edit-input {
+    border: 1px solid #b0b0b0 !important;
+    border-radius: 9px !important;
+    padding: 11px 13px !important;
+    box-shadow: none !important;
+  }
+
+  .edit-input:focus {
+    border-color: #222 !important;
+    box-shadow: 0 0 0 1px #222 !important;
+  }
+
+  /* EXISTING PHOTOS */
+
+  .existing-photos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .existing-photo {
+    height: 130px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+  }
+
+  .existing-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .upload-help {
+    color: #717171;
+    font-size: 12px;
+    margin-top: 7px;
+  }
+
+  .update-btn {
+    background: #222 !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    padding: 12px 24px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+
+    .edit-body {
+      padding: 25px 20px;
+    }
+
+    .existing-photos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+  }
+
+</style>
+
+
+<div class="edit-page">
+
+  <div class="edit-card">
+
+    <div class="edit-body">
+
+      <h1 class="edit-title">
+        Edit Your Listing
+      </h1>
+
+
+      <form
+        method="POST"
+        action="/listings/<%= listing._id %>?_method=PUT"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+
+        <!-- TITLE -->
+
+        <div class="mb-4">
+
+          <label
+            for="title"
+            class="form-label edit-label"
+          >
+            Title
+          </label>
+
+          <input
+            id="title"
+            name="listing[title]"
+            value="<%= listing.title %>"
+            type="text"
+            class="form-control edit-input"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter a valid title.
+          </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="mb-4">
+
+          <label
+            for="description"
+            class="form-label edit-label"
+          >
+            Description
+          </label>
+
+          <textarea
+            id="description"
+            name="listing[description]"
+            rows="5"
+            class="form-control edit-input"
+            required
+          ><%= listing.description %></textarea>
+
+          <div class="invalid-feedback">
+            Please enter a valid description.
+          </div>
+
+        </div>
+
+
+        <!-- EXISTING PHOTOS -->
+
+        <div class="mb-4">
+
+          <label class="form-label edit-label">
+            Current Photos
+          </label>
+
+
+          <% if (previewImages && previewImages.length > 0) { %>
+
+            <div class="existing-photos">
+
+              <% previewImages.forEach(image => { %>
+
+                <div class="existing-photo">
+
+                  <img
+                    src="<%= image.url %>"
+                    alt="listing photo"
+                  >
+
+                </div>
+
+              <% }) %>
+
+            </div>
+
+          <% } else { %>
+
+            <p class="text-muted small">
+              No photos uploaded yet.
+            </p>
+
+          <% } %>
+
+        </div>
+
+
+        <!-- ADD MORE PHOTOS -->
+
+        <div class="mb-4">
+
+          <label
+            for="images"
+            class="form-label edit-label"
+          >
+            Add More Photos
+            <span class="text-muted fw-normal">
+              (Optional)
+            </span>
+          </label>
+
+
+          <input
+            id="images"
+            name="listing[images]"
+            type="file"
+            class="form-control edit-input"
+            accept="image/png,image/jpeg,image/jpg"
+            multiple
+          >
+
+
+          <div class="upload-help">
+
+            You can select multiple photos.
+            Your listing can contain up to 10 photos.
+
+          </div>
+
+        </div>
+
+
+        <!-- PRICE + COUNTRY -->
+
+        <div class="row">
+
+          <div class="mb-4 col-md-4">
+
+            <label
+              for="price"
+              class="form-label edit-label"
+            >
+              Price per night
+            </label>
+
+            <input
+              id="price"
+              name="listing[price]"
+              value="<%= listing.price %>"
+              type="number"
+              class="form-control edit-input"
+              min="0"
+              required
+            >
+
+            <div class="invalid-feedback">
+              Please enter a correct price.
+            </div>
+
+          </div>
+
+
+          <div class="mb-4 col-md-8">
+
+            <label
+              for="country"
+              class="form-label edit-label"
+            >
+              Country
+            </label>
+
+            <input
+              id="country"
+              name="listing[country]"
+              value="<%= listing.country %>"
+              type="text"
+              class="form-control edit-input"
+              required
+            >
+
+            <div class="invalid-feedback">
+              Please enter a valid country name.
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="mb-4">
+
+          <label
+            for="location"
+            class="form-label edit-label"
+          >
+            Location / City
+          </label>
+
+          <input
+            id="location"
+            name="listing[location]"
+            value="<%= listing.location %>"
+            type="text"
+            class="form-control edit-input"
+            required
+          >
+
+          <div class="invalid-feedback">
+            Please enter a valid location name.
+          </div>
+
+        </div>
+
+
+        <!-- UPDATE -->
+
+        <button
+          type="submit"
+          class="btn btn-dark update-btn"
+        >
+
+          <i class="fa-solid fa-square-check me-1"></i>
+
+          Update Listing
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+(() => {
+
+    "use strict";
+
+    const forms =
+        document.querySelectorAll(
+            ".needs-validation"
+        );
+
+
+    Array
+        .from(forms)
+        .forEach(form => {
+
+            form.addEventListener(
+                "submit",
+                event => {
+
+                    if (!form.checkValidity()) {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                    }
+
+                    form.classList.add(
+                        "was-validated"
+                    );
+
+                },
+                false
+            );
+
+        });
+
+})();
+
+</script>

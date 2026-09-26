@@ -1,0 +1,1849 @@
+
+<style>
+.custom-navbar {
+    min-height: 5.1rem;
+    background: #ffffff !important;
+    border-bottom: 1px solid #ebebeb;
+    padding: 0.65rem 1.4rem !important;
+    position: relative;
+    z-index: 1050;
+}
+
+* {
+    box-sizing: border-box;
+}
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none !important;
+    white-space: nowrap;
+    color: #222 !important;
+    flex-shrink: 0;
+}
+
+.wanderlust-logo {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.brand-logo:hover .wanderlust-logo {
+    transform: rotate(-4deg) scale(1.04);
+}
+
+.brand-logo-text {
+    color: #222;
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    line-height: 1;
+}
+.navbar-main-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    margin-left: 2rem;
+}
+.desktop-search-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+}
+
+.search-wrapper {
+    width: min(100%, 430px);
+    min-height: 3rem;
+
+    display: flex;
+    align-items: center;
+
+    background: #ffffff;
+
+    border: 1px solid #dddddd;
+    border-radius: 2rem;
+
+    padding: 0.2rem 0.3rem 0.2rem 0.9rem;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.05);
+
+    transition: 0.2s ease;
+}
+
+.search-wrapper:hover {
+    border-color: #bdbdbd;
+}
+
+.search-wrapper:focus-within {
+    border-color: #aaa;
+}
+
+.search-inp {
+    flex: 1;
+    min-width: 0;
+
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+
+    background: transparent !important;
+
+    font-size: 0.88rem;
+
+    padding: 0.5rem 0.65rem !important;
+}
+
+.search-inp::placeholder {
+    color: #717171;
+}
+
+.search-btn {
+    width: 2.35rem;
+    height: 2.35rem;
+
+    flex-shrink: 0;
+
+    border: none !important;
+    border-radius: 50% !important;
+
+    background: #ff385c !important;
+    color: white !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 !important;
+
+    transition: 0.2s ease;
+}
+
+.search-btn:hover {
+    background: #e61e4d !important;
+    transform: scale(1.03);
+}
+
+.desktop-right-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: 1.7rem;
+    flex-shrink: 0;
+}
+
+.nav-link-premium {
+    color: #222222 !important;
+
+    font-size: 0.88rem;
+    font-weight: 600 !important;
+
+    padding: 0.65rem 0.85rem !important;
+
+    border-radius: 2rem;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
+}
+
+.nav-link-premium:hover {
+    background: #f7f7f7;
+}
+
+.host-icon {
+    margin-right: 0.3rem;
+}
+
+.profile-menu-btn {
+    min-height: 2.9rem;
+
+    border: 1px solid #dddddd;
+
+    background: #ffffff;
+
+    border-radius: 2rem;
+
+    padding: 0.25rem 0.3rem 0.25rem 0.8rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.55rem;
+
+    text-decoration: none;
+
+    color: #222222 !important;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.05);
+
+    transition: 0.2s ease;
+}
+
+.profile-menu-btn:hover {
+    border-color: #bbb;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.profile-bars {
+    color: #222;
+    font-size: 0.85rem;
+}
+
+.user-avatar,
+.guest-avatar {
+    width: 2.15rem;
+    height: 2.15rem;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+}
+
+.user-avatar {
+    background: linear-gradient(
+        135deg,
+        #ff385c,
+        #d70466
+    );
+
+    color: #ffffff;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.guest-avatar {
+    background: #f7f7f7;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.premium-dropdown {
+    width: 260px;
+
+    border: 1px solid #eeeeee !important;
+
+    background: #ffffff;
+
+    border-radius: 1.1rem !important;
+
+    padding: 0.5rem !important;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.13),
+        0 3px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.account-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    padding: 0.65rem;
+
+    border-bottom: 1px solid #eeeeee;
+
+    margin-bottom: 0.3rem;
+}
+
+.account-header-avatar {
+    width: 2.45rem;
+    height: 2.45rem;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #ff385c,
+        #d70466
+    );
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    font-weight: 700;
+}
+
+.account-header-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.account-header-text {
+    min-width: 0;
+}
+
+.account-welcome {
+    color: #717171;
+    font-size: 0.68rem;
+}
+
+.account-username {
+    color: #222;
+    font-size: 0.88rem;
+    font-weight: 700;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.premium-dropdown .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    color: #222;
+
+    font-size: 0.84rem;
+
+    padding: 0.62rem 0.65rem;
+
+    border-radius: 0.7rem;
+
+    transition: 0.15s ease;
+}
+
+.premium-dropdown .dropdown-item:hover {
+    background: #f7f7f7;
+    color: #222;
+}
+
+.menu-icon {
+    width: 1.9rem;
+    height: 1.9rem;
+
+    flex-shrink: 0;
+
+    border-radius: 0.6rem;
+
+    background: #f7f7f7;
+
+    color: #555;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-divider {
+    height: 1px;
+    background: #eeeeee;
+
+    margin: 0.35rem 0.3rem;
+}
+
+.logout-item {
+    color: #d92d20 !important;
+}
+
+.logout-item .menu-icon {
+    background: #fff1f0;
+    color: #d92d20;
+}
+
+.mobile-menu-button {
+    display: none;
+
+    width: 2.65rem;
+    height: 2.65rem;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #222;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    transition: 0.2s ease;
+}
+
+.mobile-menu-button:hover {
+    background: #f7f7f7;
+}
+.airbnb-clone-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: -1px;
+
+    height: 21px;
+
+    background: #ffffff;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.airbnb-clone-track {
+    display: flex;
+    align-items: center;
+
+    width: max-content;
+
+    white-space: nowrap;
+
+    will-change: transform;
+
+    animation: airbnbCloneMove 18s linear infinite;
+}
+
+.airbnb-clone-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: #777777;
+
+    background: #ffffff;
+
+    font-size: 0.58rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    padding-right: 80px;
+}
+
+.airbnb-clone-text i {
+    color: #ff385c;
+    font-size: 0.5rem;
+    margin: 0 9px;
+}
+
+@keyframes airbnbCloneMove {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+
+}
+.sidebar-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.38);
+
+    z-index: 2000;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.mobile-sidebar {
+
+    position: fixed;
+
+    top: 0;
+    right: 0;
+    width: 280px;
+
+    max-width: 82vw;
+
+    height: 100vh;
+
+    background: #ffffff;
+
+    z-index: 2100;
+
+    box-shadow:
+        -8px 0 25px rgba(0, 0, 0, 0.13);
+
+    transform: translateX(105%);
+
+    visibility: hidden;
+
+    transition:
+        transform 0.3s cubic-bezier(.4, 0, .2, 1),
+        visibility 0.3s ease;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.sidebar-top {
+
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 0.9rem;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.sidebar-brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.45rem;
+
+    text-decoration: none;
+}
+
+.sidebar-brand-logo {
+
+    width: 32px;
+    height: 32px;
+}
+
+.sidebar-brand-text {
+
+    color: #222;
+
+    font-size: 1.12rem;
+
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
+}
+.sidebar-close {
+
+    width: 2.15rem;
+    height: 2.15rem;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #222;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.sidebar-close:hover {
+
+    background: #f7f7f7;
+
+    transform: rotate(90deg);
+}
+
+.sidebar-content {
+
+    padding: 0.8rem;
+}
+
+.sidebar-search {
+
+    margin-bottom: 0.75rem;
+}
+
+.sidebar-search .search-wrapper {
+
+    width: 100%;
+
+    min-height: 2.65rem;
+
+    padding-left: 0.7rem;
+}
+
+.sidebar-search .search-inp {
+
+    font-size: 0.78rem;
+
+    padding: 0.4rem 0.45rem !important;
+}
+
+.sidebar-search .search-btn {
+
+    width: 2.05rem;
+    height: 2.05rem;
+
+    font-size: 0.7rem;
+}
+
+.sidebar-account {
+
+    padding: 0.65rem;
+
+    margin-bottom: 0.65rem;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 0.8rem;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.6rem;
+}
+
+.sidebar-account-avatar {
+
+    width: 2.2rem;
+    height: 2.2rem;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #ff385c,
+        #d70466
+    );
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+}
+
+.sidebar-account-avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.sidebar-account-info {
+
+    min-width: 0;
+}
+
+.sidebar-account-label {
+
+    color: #717171;
+
+    font-size: 0.62rem;
+}
+
+.sidebar-account-name {
+
+    color: #222;
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+.sidebar-section {
+
+    padding-top: 0.7rem;
+
+    margin-top: 0.7rem;
+
+    border-top: 1px solid #eeeeee;
+}
+
+.sidebar-link {
+
+    width: 100%;
+
+    min-height: 2.65rem;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.65rem;
+
+    padding: 0.48rem 0.55rem;
+
+    margin-bottom: 0.2rem;
+
+    border-radius: 0.7rem;
+
+    color: #222 !important;
+
+    text-decoration: none;
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    transition: 0.15s ease;
+}
+
+.sidebar-link:hover {
+
+    background: #f7f7f7;
+
+    transform: translateX(2px);
+}
+
+.sidebar-link-icon {
+
+    width: 1.9rem;
+    height: 1.9rem;
+
+    flex-shrink: 0;
+
+    border-radius: 0.55rem;
+
+    background: #f7f7f7;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #555;
+
+    font-size: 0.75rem;
+}
+
+@media (max-width: 991.98px) {
+
+    .custom-navbar {
+
+        min-height: 4.65rem;
+
+        padding-left: 1rem !important;
+
+        padding-right: 1rem !important;
+    }
+
+    .navbar-main-content {
+
+        display: none;
+    }
+
+    .mobile-menu-button {
+
+        display: flex;
+    }
+
+}
+@media (max-width: 575.98px) {
+
+    .custom-navbar {
+
+        min-height: 4.35rem;
+
+        padding-left: 0.7rem !important;
+
+        padding-right: 0.7rem !important;
+    }
+
+    .wanderlust-logo {
+
+        width: 34px;
+        height: 34px;
+    }
+
+    .brand-logo-text {
+
+        font-size: 1.18rem;
+    }
+
+    .mobile-menu-button {
+
+        width: 2.4rem;
+        height: 2.4rem;
+
+        font-size: 0.82rem;
+    }
+
+    /*
+       Compact mobile sidebar
+    */
+
+    .mobile-sidebar {
+
+        width: 280px;
+
+        max-width: 82vw;
+    }
+
+    .sidebar-top {
+
+        height: 58px;
+
+        padding: 0 0.75rem;
+    }
+
+    .sidebar-content {
+
+        padding: 0.7rem;
+    }
+
+    .airbnb-clone-line {
+
+        height: 19px;
+    }
+
+    .airbnb-clone-text {
+
+        font-size: 0.5rem;
+
+        padding-right: 55px;
+    }
+
+}
+@media (max-width: 380px) {
+
+    .mobile-sidebar {
+
+        width: 260px;
+
+        max-width: 80vw;
+    }
+
+    .sidebar-brand-text {
+
+        font-size: 1.05rem;
+    }
+
+    .sidebar-link {
+
+        min-height: 2.5rem;
+
+        font-size: 0.78rem;
+
+        padding: 0.4rem 0.5rem;
+    }
+
+    .sidebar-link-icon {
+
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+
+    .sidebar-account {
+
+        padding: 0.55rem;
+    }
+
+    .sidebar-search .search-wrapper {
+
+        min-height: 2.5rem;
+    }
+
+}
+@media (max-width: 767px) and (orientation: landscape) {
+
+    .mobile-sidebar {
+
+        width: 270px;
+
+        max-width: 75vw;
+    }
+
+    .sidebar-top {
+
+        height: 54px;
+    }
+
+    .sidebar-content {
+
+        padding: 0.6rem;
+    }
+
+}
+
+</style>
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+<nav class="navbar custom-navbar sticky-top">
+
+    <div class="container-fluid px-lg-3">
+
+
+        <!-- BRAND -->
+
+        <a
+            href="/listings"
+            class="brand-logo"
+            aria-label="Wanderlust Home"
+        >
+
+            <svg
+                class="wanderlust-logo"
+                viewBox="0 0 64 64"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+
+                <rect
+                    x="4"
+                    y="4"
+                    width="56"
+                    height="56"
+                    rx="18"
+                    fill="#ff385c"
+                />
+
+                <path
+                    d="M16 19 L23 43 L32 28 L41 43 L48 19"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <circle
+                    cx="32"
+                    cy="28"
+                    r="3.5"
+                    fill="#ffffff"
+                />
+
+                <path
+                    d="M19 49 C26 53 38 53 45 49"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                />
+
+            </svg>
+
+            <span class="brand-logo-text">
+                wanderlust
+            </span>
+
+        </a>
+
+
+        <!-- DESKTOP CONTENT -->
+
+        <div class="navbar-main-content">
+
+
+            <!-- SEARCH -->
+
+            <div class="desktop-search-area">
+
+                <form
+                    class="search-wrapper"
+                    action="/listings"
+                    method="GET"
+                    role="search"
+                >
+
+                    <i
+                        class="fa-solid fa-location-dot text-secondary"
+                        style="font-size:0.82rem;"
+                    ></i>
+
+                    <input
+                        class="form-control search-inp"
+                        name="search"
+                        type="search"
+                        placeholder="Search destinations..."
+                        aria-label="Search destinations"
+                        required
+                    >
+
+                    <button
+                        class="btn search-btn"
+                        type="submit"
+                        aria-label="Search"
+                    >
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- RIGHT NAV -->
+
+            <div class="desktop-right-nav">
+
+
+                <!-- HOST -->
+
+                <a
+                    href="/listings/new"
+                    class="nav-link-premium"
+                >
+
+                    <i
+                        class="fa-solid fa-house host-icon"
+                    ></i>
+
+                    Wanderlust your home
+
+                </a>
+
+
+                <!-- PROFILE -->
+
+                <div class="dropdown">
+
+                    <a
+                        href="#"
+                        class="profile-menu-btn"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+
+                        <i class="fa-solid fa-bars profile-bars"></i>
+
+
+                        <% if(currUser) { %>
+
+                            <% if(
+                                currUser.profileImage &&
+                                currUser.profileImage.url
+                            ) { %>
+
+                                <div class="user-avatar">
+
+                                    <img
+                                        src="<%= currUser.profileImage.url %>"
+                                        alt="<%= currUser.username %>"
+                                    >
+
+                                </div>
+
+                            <% } else { %>
+
+                                <div class="user-avatar">
+
+                                    <%= currUser.username
+                                        .charAt(0)
+                                        .toUpperCase() %>
+
+                                </div>
+
+                            <% } %>
+
+                        <% } else { %>
+
+                            <div class="guest-avatar">
+
+                                <i class="fa-solid fa-user"></i>
+
+                            </div>
+
+                        <% } %>
+
+                    </a>
+
+
+                    <!-- DROPDOWN -->
+
+                    <ul
+                        class="dropdown-menu dropdown-menu-end premium-dropdown mt-2"
+                    >
+
+                        <% if(!currUser){ %>
+
+                            <li>
+
+                                <a
+                                    href="/signup"
+                                    class="dropdown-item fw-bold"
+                                >
+
+                                    <span class="menu-icon">
+
+                                        <i
+                                            class="fa-solid fa-user-plus"
+                                        ></i>
+
+                                    </span>
+
+                                    Sign up
+
+                                </a>
+
+                            </li>
+
+
+                            <li>
+
+                                <a
+                                    href="/login"
+                                    class="dropdown-item"
+                                >
+
+                                    <span class="menu-icon">
+
+                                        <i
+                                            class="fa-solid fa-right-to-bracket"
+                                        ></i>
+
+                                    </span>
+
+                                    Log in
+
+                                </a>
+
+                            </li>
+
+
+                            <div class="menu-divider"></div>
+
+
+                            <li>
+
+                                <a
+                                    href="/listings/new"
+                                    class="dropdown-item"
+                                >
+
+                                    <span class="menu-icon">
+
+                                        <i
+                                            class="fa-solid fa-house"
+                                        ></i>
+
+                                    </span>
+
+                                    Wanderlust your home
+
+                                </a>
+
+                            </li>
+
+                        <% } %>
+
+
+                        <% if(currUser){ %>
+
+                            <li>
+
+                                <div class="account-header">
+
+                                    <% if(
+                                        currUser.profileImage &&
+                                        currUser.profileImage.url
+                                    ) { %>
+
+                                        <div
+                                            class="account-header-avatar"
+                                        >
+
+                                            <img
+                                                src="<%= currUser.profileImage.url %>"
+                                                alt="<%= currUser.username %>"
+                                            >
+
+                                        </div>
+
+                                    <% } else { %>
+
+                                        <div
+                                            class="account-header-avatar"
+                                        >
+
+                                            <%= currUser.username
+                                                .charAt(0)
+                                                .toUpperCase() %>
+
+                                        </div>
+
+                                    <% } %>
+
+
+                                    <div
+                                        class="account-header-text"
+                                    >
+
+                                        <div
+                                            class="account-welcome"
+                                        >
+                                            Welcome back
+                                        </div>
+
+                                        <div
+                                            class="account-username"
+                                        >
+                                            <%= currUser.username %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+
+                            <li>
+
+                                <a
+                                    href="/profile"
+                                    class="dropdown-item"
+                                >
+
+                                    <span class="menu-icon">
+
+                                        <i
+                                            class="fa-solid fa-user"
+                                        ></i>
+
+                                    </span>
+
+                                    My Profile
+
+                                </a>
+
+                            </li>
+
+
+                            <div class="menu-divider"></div>
+
+
+                            <li>
+
+                                <a
+                                    href="/logout"
+                                    class="dropdown-item logout-item"
+                                >
+
+                                    <span class="menu-icon">
+
+                                        <i
+                                            class="fa-solid fa-arrow-right-from-bracket"
+                                        ></i>
+
+                                    </span>
+
+                                    Log out
+
+                                </a>
+
+                            </li>
+
+                        <% } %>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            type="button"
+            class="mobile-menu-button"
+            id="openSidebar"
+            aria-label="Open navigation menu"
+        >
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- MOVING LINE -->
+
+    <div class="airbnb-clone-line">
+
+        <div class="airbnb-clone-track">
+
+            <span class="airbnb-clone-text">
+
+                <i class="fa-solid fa-star"></i>
+
+                This is an Airbnb Clone Project
+
+                <i class="fa-solid fa-star"></i>
+
+            </span>
+
+            <span class="airbnb-clone-text">
+
+                <i class="fa-solid fa-star"></i>
+
+                This is an Airbnb Clone Project
+
+                <i class="fa-solid fa-star"></i>
+
+            </span>
+
+            <span class="airbnb-clone-text">
+
+                <i class="fa-solid fa-star"></i>
+
+                This is an Airbnb Clone Project
+
+                <i class="fa-solid fa-star"></i>
+
+            </span>
+
+            <span class="airbnb-clone-text">
+
+                <i class="fa-solid fa-star"></i>
+
+                This is an Airbnb Clone Project
+
+                <i class="fa-solid fa-star"></i>
+
+            </span>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     MOBILE SIDEBAR
+========================================================= -->
+
+<aside
+    class="mobile-sidebar"
+    id="mobileSidebar"
+    aria-hidden="true"
+>
+
+
+    <!-- SIDEBAR HEADER -->
+
+    <div class="sidebar-top">
+
+        <a
+            href="/listings"
+            class="sidebar-brand"
+        >
+
+            <svg
+                class="sidebar-brand-logo"
+                viewBox="0 0 64 64"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+
+                <rect
+                    x="4"
+                    y="4"
+                    width="56"
+                    height="56"
+                    rx="18"
+                    fill="#ff385c"
+                />
+
+                <path
+                    d="M16 19 L23 43 L32 28 L41 43 L48 19"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+                <circle
+                    cx="32"
+                    cy="28"
+                    r="3.5"
+                    fill="#ffffff"
+                />
+
+                <path
+                    d="M19 49 C26 53 38 53 45 49"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                />
+
+            </svg>
+
+            <span class="sidebar-brand-text">
+                wanderlust
+            </span>
+
+        </a>
+
+
+        <button
+            type="button"
+            class="sidebar-close"
+            id="closeSidebar"
+            aria-label="Close navigation menu"
+        >
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+    <!-- SIDEBAR CONTENT -->
+
+    <div class="sidebar-content">
+
+
+        <!-- SEARCH -->
+
+        <div class="sidebar-search">
+
+            <form
+                class="search-wrapper"
+                action="/listings"
+                method="GET"
+                role="search"
+            >
+
+                <i
+                    class="fa-solid fa-location-dot text-secondary"
+                    style="font-size:0.72rem;"
+                ></i>
+
+                <input
+                    class="form-control search-inp"
+                    name="search"
+                    type="search"
+                    placeholder="Search..."
+                    aria-label="Search destinations"
+                    required
+                >
+
+                <button
+                    class="btn search-btn"
+                    type="submit"
+                    aria-label="Search"
+                >
+
+                    <i
+                        class="fa-solid fa-magnifying-glass"
+                    ></i>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ACCOUNT -->
+
+        <% if(currUser){ %>
+
+            <div class="sidebar-account">
+
+                <% if(
+                    currUser.profileImage &&
+                    currUser.profileImage.url
+                ) { %>
+
+                    <div class="sidebar-account-avatar">
+
+                        <img
+                            src="<%= currUser.profileImage.url %>"
+                            alt="<%= currUser.username %>"
+                        >
+
+                    </div>
+
+                <% } else { %>
+
+                    <div class="sidebar-account-avatar">
+
+                        <%= currUser.username
+                            .charAt(0)
+                            .toUpperCase() %>
+
+                    </div>
+
+                <% } %>
+
+
+                <div class="sidebar-account-info">
+
+                    <div class="sidebar-account-label">
+                        Welcome back
+                    </div>
+
+                    <div class="sidebar-account-name">
+                        <%= currUser.username %>
+                    </div>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+
+        <!-- LINKS -->
+
+        <div class="sidebar-section">
+
+
+            <!-- WANDERLUST YOUR HOME -->
+
+            <a
+                href="/listings/new"
+                class="sidebar-link close-sidebar-link"
+            >
+
+                <span class="sidebar-link-icon">
+
+                    <i class="fa-solid fa-house"></i>
+
+                </span>
+
+                <span>
+                    Wanderlust your home
+                </span>
+
+            </a>
+
+
+            <% if(currUser){ %>
+
+
+                <!-- PROFILE -->
+
+                <a
+                    href="/profile"
+                    class="sidebar-link close-sidebar-link"
+                >
+
+                    <span class="sidebar-link-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <!-- LOGOUT -->
+
+                <a
+                    href="/logout"
+                    class="sidebar-link close-sidebar-link"
+                    style="color:#d92d20 !important;"
+                >
+
+                    <span
+                        class="sidebar-link-icon"
+                        style="color:#d92d20;background:#fff1f0;"
+                    >
+
+                        <i
+                            class="fa-solid fa-arrow-right-from-bracket"
+                        ></i>
+
+                    </span>
+
+                    <span>
+                        Log out
+                    </span>
+
+                </a>
+
+
+            <% } else { %>
+
+
+                <!-- SIGN UP -->
+
+                <a
+                    href="/signup"
+                    class="sidebar-link close-sidebar-link"
+                >
+
+                    <span class="sidebar-link-icon">
+
+                        <i
+                            class="fa-solid fa-user-plus"
+                        ></i>
+
+                    </span>
+
+                    <span>
+                        Sign up
+                    </span>
+
+                </a>
+
+
+                <!-- LOGIN -->
+
+                <a
+                    href="/login"
+                    class="sidebar-link close-sidebar-link"
+                >
+
+                    <span class="sidebar-link-icon">
+
+                        <i
+                            class="fa-solid fa-right-to-bracket"
+                        ></i>
+
+                    </span>
+
+                    <span>
+                        Log in
+                    </span>
+
+                </a>
+
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+</aside>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const openButton =
+        document.getElementById("openSidebar");
+
+    const closeButton =
+        document.getElementById("closeSidebar");
+
+    const sidebar =
+        document.getElementById("mobileSidebar");
+
+    const overlay =
+        document.getElementById("sidebarOverlay");
+
+    const links =
+        document.querySelectorAll(".close-sidebar-link");
+
+
+    /* OPEN */
+
+    function openSidebar() {
+
+        if (!sidebar || !overlay) return;
+
+        sidebar.classList.add("active");
+
+        overlay.classList.add("active");
+
+        sidebar.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow = "hidden";
+    }
+
+
+    /* CLOSE */
+
+    function closeSidebar() {
+
+        if (!sidebar || !overlay) return;
+
+        sidebar.classList.remove("active");
+
+        overlay.classList.remove("active");
+
+        sidebar.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow = "";
+    }
+
+
+    /* OPEN BUTTON */
+
+    if (openButton) {
+
+        openButton.addEventListener(
+            "click",
+            openSidebar
+        );
+
+    }
+
+
+    /* CLOSE BUTTON */
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+    }
+
+
+    /* OVERLAY */
+
+    if (overlay) {
+
+        overlay.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+    }
+
+
+    /* LINKS */
+
+    links.forEach(function (link) {
+
+        link.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+    });
+
+
+    /* ESCAPE */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                sidebar &&
+                sidebar.classList.contains("active")
+            ) {
+
+                closeSidebar();
+
+            }
+
+        }
+    );
+
+
+    /* RESIZE */
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            if (window.innerWidth > 991) {
+
+                closeSidebar();
+
+            }
+
+        }
+    );
+
+});
+
+</script>
+

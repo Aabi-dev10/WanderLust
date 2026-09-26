@@ -1,0 +1,990 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+
+  :root {
+    --airbnb-red: #ff385c;
+    --airbnb-red-dark: #e31c5f;
+    --airbnb-black: #222222;
+    --airbnb-gray: #717171;
+    --airbnb-light-gray: #f7f7f7;
+    --airbnb-border: #dddddd;
+  }
+
+  .login-page {
+    min-height: calc(100vh - 90px);
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 12px 24px 50px;
+
+    background: #ffffff;
+  }
+
+
+  .login-container {
+    width: 100%;
+    max-width: 1050px;
+
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+
+    gap: 28px;
+
+    align-items: stretch;
+  }
+
+  .login-card {
+    background: #ffffff;
+
+    border: 1px solid var(--airbnb-border);
+
+    border-radius: 20px;
+
+    box-shadow:
+      0 4px 18px rgba(0, 0, 0, 0.07);
+
+    overflow: hidden;
+  }
+
+
+  .login-card-body {
+    padding: 38px 38px 32px;
+  }
+
+  .login-header {
+    margin-bottom: 28px;
+  }
+
+
+  .login-brand {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 46px;
+
+    margin-bottom: 18px;
+
+    border-radius: 50%;
+
+    background: #fff0f3;
+
+    color: var(--airbnb-red);
+
+    font-size: 22px;
+  }
+
+
+  .login-title {
+    margin: 0 0 7px;
+
+    color: var(--airbnb-black);
+
+    font-size: 28px;
+    line-height: 1.2;
+
+    font-weight: 650;
+
+    letter-spacing: -0.5px;
+  }
+
+
+  .login-subtitle {
+    margin: 0;
+
+    color: var(--airbnb-gray);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+  }
+  .login-field {
+    margin-bottom: 20px;
+  }
+
+
+  .login-field:last-of-type {
+    margin-bottom: 24px;
+  }
+
+
+  .login-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--airbnb-black);
+
+    font-size: 14px;
+
+    font-weight: 600;
+  }
+
+
+  .login-input {
+    width: 100%;
+
+    min-height: 50px;
+
+    padding: 12px 14px !important;
+
+    border: 1px solid #b0b0b0 !important;
+
+    border-radius: 10px !important;
+
+    background: #ffffff !important;
+
+    color: var(--airbnb-black);
+
+    font-size: 14px;
+
+    outline: none;
+
+    box-shadow: none !important;
+
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+
+  .login-input:hover {
+    border-color: #777777 !important;
+  }
+
+
+  .login-input:focus {
+    border-color: #222222 !important;
+
+    box-shadow:
+      0 0 0 1px #222222 !important;
+  }
+
+
+  .login-input::placeholder {
+    color: #999999;
+  }
+
+  .password-wrapper {
+    position: relative;
+  }
+
+
+  .password-wrapper .login-input {
+    padding-right: 48px !important;
+  }
+
+
+  .password-toggle {
+    position: absolute;
+
+    right: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #717171;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    padding: 5px;
+  }
+
+
+  .password-toggle:hover {
+    color: #222222;
+  }
+
+  .login-options {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: -5px 0 24px;
+  }
+
+
+  .remember-me {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #555555;
+
+    font-size: 13px;
+
+    cursor: pointer;
+  }
+
+
+  .remember-me input {
+    width: 15px;
+    height: 15px;
+
+    accent-color: var(--airbnb-red);
+
+    cursor: pointer;
+  }
+
+
+  .forgot-link {
+    color: #222222;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: underline;
+
+    text-underline-offset: 2px;
+  }
+
+
+  .forgot-link:hover {
+    color: var(--airbnb-red);
+  }
+  .login-submit-btn {
+    width: 100%;
+
+    min-height: 50px;
+
+    padding: 12px 20px !important;
+
+    border: none !important;
+
+    border-radius: 10px !important;
+
+    background:
+      linear-gradient(
+        90deg,
+        #ff385c,
+        #e31c5f
+      ) !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px;
+
+    font-weight: 650 !important;
+
+    box-shadow: none !important;
+
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+
+  .login-submit-btn:hover {
+    color: #ffffff !important;
+
+    opacity: 0.94;
+
+    box-shadow:
+      0 5px 14px rgba(255, 56, 92, 0.22);
+  }
+
+  .login-submit-btn:active {
+    transform: scale(0.98);
+  }
+  .login-divider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 0 20px;
+
+    color: #999999;
+
+    font-size: 12px;
+  }
+
+
+  .login-divider::before,
+  .login-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: var(--airbnb-border);
+  }
+  .login-footer {
+    text-align: center;
+
+    color: var(--airbnb-gray);
+
+    font-size: 14px;
+  }
+
+
+  .login-footer a {
+    color: #222222 !important;
+
+    font-weight: 650;
+
+    text-decoration: underline !important;
+
+    text-underline-offset: 2px;
+  }
+
+
+  .login-footer a:hover {
+    color: var(--airbnb-red) !important;
+  }
+  .login-side {
+    position: relative;
+
+    min-height: 560px;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    background:
+      linear-gradient(
+        145deg,
+        #222222,
+        #444444
+      );
+
+    box-shadow:
+      0 6px 25px rgba(0, 0, 0, 0.10);
+  }
+
+
+  .login-side-image {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+
+  .login-side-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.05) 15%,
+        rgba(0, 0, 0, 0.20) 42%,
+        rgba(0, 0, 0, 0.78) 100%
+      );
+  }
+  .login-side-content {
+    position: absolute;
+
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+
+    color: #ffffff;
+  }
+
+
+  .side-small-title {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 12px;
+
+    padding: 7px 12px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,0.18);
+
+    backdrop-filter: blur(8px);
+
+    font-size: 12px;
+
+    font-weight: 600;
+  }
+
+
+  .side-small-title i {
+    color: #ffffff;
+  }
+
+
+  .login-side-title {
+    margin: 0 0 10px;
+
+    font-size: 31px;
+
+    line-height: 1.15;
+
+    font-weight: 650;
+
+    letter-spacing: -0.5px;
+  }
+
+
+  .login-side-text {
+    max-width: 460px;
+
+    margin: 0 0 22px;
+
+    color: rgba(255,255,255,0.88);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+  }
+  .side-features {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 9px;
+  }
+
+
+  .side-feature {
+    padding: 13px 11px;
+
+    border: 1px solid rgba(255,255,255,0.22);
+
+    border-radius: 12px;
+
+    background:
+      rgba(255,255,255,0.12);
+
+    backdrop-filter: blur(8px);
+  }
+
+
+  .side-feature i {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 15px;
+  }
+
+
+  .side-feature strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+  }
+
+
+  .side-feature span {
+    display: block;
+
+    color: rgba(255,255,255,0.72);
+
+    font-size: 10px;
+  }
+  .login-side-badge {
+    position: absolute;
+
+    top: 24px;
+    right: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px 13px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,0.92);
+
+    color: #222222;
+
+    box-shadow:
+      0 5px 18px rgba(0,0,0,0.12);
+
+    font-size: 12px;
+
+    font-weight: 600;
+  }
+
+
+  .login-side-badge i {
+    color: var(--airbnb-red);
+  }
+  .was-validated .login-input:valid {
+    border-color: #198754 !important;
+  }
+
+
+  .was-validated .login-input:invalid {
+    border-color: #dc3545 !important;
+  }
+
+
+  .valid-feedback,
+  .invalid-feedback {
+    margin-top: 6px;
+
+    font-size: 12px;
+  }
+  @media (max-width: 900px) {
+    .login-container {
+      grid-template-columns: 1fr;
+
+      max-width: 520px;
+    }
+    .login-side {
+      min-height: 400px;
+    }
+  }
+
+/* MOBILe*/
+
+  @media (max-width: 576px) {
+
+    .login-page {
+      padding:
+        8px 14px 40px;
+    }
+
+
+    .login-card {
+      border-radius: 17px;
+    }
+
+
+    .login-card-body {
+      padding:
+        28px 22px 25px;
+    }
+
+
+    .login-title {
+      font-size: 24px;
+    }
+
+
+    .login-brand {
+      width: 43px;
+      height: 43px;
+
+      font-size: 20px;
+    }
+
+
+    .login-side {
+      min-height: 390px;
+
+      border-radius: 18px;
+    }
+
+
+    .login-side-content {
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+    }
+
+
+    .login-side-title {
+      font-size: 25px;
+    }
+
+
+    .login-side-text {
+      font-size: 13px;
+
+      margin-bottom: 17px;
+    }
+
+
+    .side-features {
+      gap: 6px;
+    }
+
+
+    .side-feature {
+      padding: 10px 8px;
+    }
+
+
+    .side-feature span {
+      font-size: 9px;
+    }
+
+
+    .login-side-badge {
+      top: 15px;
+      right: 15px;
+    }
+
+  }
+
+
+  @media (max-width: 380px) {
+
+    .login-options {
+      align-items: flex-start;
+
+      flex-direction: column;
+
+      gap: 10px;
+    }
+
+
+    .side-features {
+      grid-template-columns:
+        repeat(2, 1fr);
+    }
+
+  }
+</style>
+<div class="login-page">
+  <div class="login-container">
+    <div class="card login-card">
+      <div class="login-card-body">
+        <!-- HEADER -->
+        <div class="login-header">
+
+          <div class="login-brand">
+
+            <i class="fa-brands fa-airbnb"></i>
+
+          </div>
+
+
+          <h1 class="login-title">
+
+            Welcome back
+
+          </h1>
+
+
+          <p class="login-subtitle">
+
+            Log in to continue your journey with Wanderlust.
+
+          </p>
+
+        </div>
+
+
+        <!-- LOGIN FORM -->
+
+        <form
+          action="/login"
+          method="POST"
+          novalidate
+          class="needs-validation"
+        >
+
+
+          <!-- USERNAME -->
+
+          <div class="login-field">
+
+            <label
+              for="username"
+              class="login-label"
+            >
+
+              Username
+
+            </label>
+
+
+            <input
+              id="username"
+              name="username"
+              type="text"
+              class="form-control login-input"
+              placeholder="Enter your username"
+              autocomplete="username"
+              required
+            >
+
+
+            <div class="valid-feedback">
+
+              Looks good!
+
+            </div>
+
+
+            <div class="invalid-feedback">
+
+              Please enter your username.
+
+            </div>
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="login-field">
+
+            <label
+              for="password"
+              class="login-label"
+            >
+
+              Password
+
+            </label>
+
+
+            <div class="password-wrapper">
+
+              <input
+                id="password"
+                name="password"
+                type="password"
+                class="form-control login-input"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+              >
+
+
+              <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePassword()"
+                aria-label="Show password"
+              >
+
+                <i
+                  id="passwordIcon"
+                  class="fa-solid fa-eye"
+                ></i>
+
+              </button>
+
+            </div>
+
+
+            <div class="valid-feedback">
+
+              Looks good!
+
+            </div>
+
+
+            <div class="invalid-feedback">
+
+              Please enter your password.
+
+            </div>
+
+          </div>
+
+
+          <!-- OPTIONS -->
+
+          <div class="login-options">
+
+            <label class="remember-me">
+
+              <input
+                type="checkbox"
+                name="remember"
+              >
+
+              <span>
+                Remember me
+              </span>
+
+            </label>
+
+
+            <!-- FORGOT PASSWORD -->
+
+            <a
+              href="/forgot-password"
+              class="forgot-link"
+            >
+              Forgot password?
+            </a>
+
+          </div>
+
+
+          <!-- LOGIN BUTTON -->
+
+          <button
+            type="submit"
+            class="btn login-submit-btn"
+          >
+            Continue
+            <i
+              class="fa-solid fa-arrow-right ms-2"
+            ></i>
+          </button>
+          <!-- DIVIDER -->
+          <div class="login-divider">
+            or
+          </div>
+          <!-- SIGNUP -->
+          <div class="login-footer">
+            Don't have an account?
+            <a href="/signup">
+              Sign up
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="login-side">
+      <!-- BACKGROUND IMAGE -->
+      <img
+        class="login-side-image"
+        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85"
+        alt="Beautiful travel destination"
+      >
+      <!-- DARK OVERLAY -->
+      <div class="login-side-overlay"></div>
+      <!-- TOP BADGE -->
+      <div class="login-side-badge">
+        <i class="fa-solid fa-heart"></i>
+        <span>
+          Travel. Stay. Remember.
+        </span>
+      </div>
+      <!-- CONTENT -->
+      <div class="login-side-content">
+        <div class="side-small-title">
+          <i class="fa-solid fa-compass"></i>
+          <span>
+            Your next adventure starts here
+          </span>
+        </div>
+        <h2 class="login-side-title">
+          Come back to
+          <br>
+          Wanderlust.
+        </h2>
+        <p class="login-side-text">
+          Discover unique stays, peaceful escapes,
+          beautiful destinations, and unforgettable
+          places waiting for your next trip.
+        </p>
+        <!-- FEATURES -->
+        <div class="side-features">
+
+          <div class="side-feature">
+            <i class="fa-solid fa-house"></i>
+            <strong>
+              Unique stays
+            </strong>
+            <span>
+              Feel at home
+            </span>
+          </div>
+          <div class="side-feature">
+            <i class="fa-solid fa-location-dot"></i>
+            <strong>
+              Great places
+            </strong>
+            <span>
+              Explore more
+            </span>
+          </div>
+          <div class="side-feature">
+            <i class="fa-solid fa-star"></i>
+            <strong>
+              Loved stays
+            </strong>
+            <span>
+              Guest favorites
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function togglePassword() {
+    const password =
+      document.getElementById("password");
+
+    const icon =
+      document.getElementById("passwordIcon");
+    if (password.type === "password") {
+      password.type = "text";
+      icon.classList.remove(
+        "fa-eye"
+      );
+      icon.classList.add(
+        "fa-eye-slash"
+      );
+    } else {
+      password.type = "password";
+      icon.classList.remove(
+        "fa-eye-slash"
+      );
+      icon.classList.add(
+        "fa-eye"
+      );
+
+    }
+
+  }
+  (() => {
+    'use strict';
+    const forms =
+      document.querySelectorAll(
+        '.needs-validation'
+      );
+    Array
+      .from(forms)
+      .forEach(form => {
+        form.addEventListener(
+          'submit',
+          event => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add(
+              'was-validated'
+            );
+          },
+          false
+        );
+      });
+  })();
+</script>

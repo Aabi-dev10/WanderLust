@@ -1,0 +1,778 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    :root {
+        --airbnb-red: #ff385c;
+        --airbnb-red-dark: #e31c5f;
+        --airbnb-black: #222222;
+        --airbnb-gray: #717171;
+        --airbnb-light-gray: #f7f7f7;
+        --airbnb-border: #dddddd;
+        --airbnb-green: #008a05;
+    }
+    /* PAGE */
+    .edit-profile-page {
+        min-height: calc(100vh - 90px);
+        padding: 28px 20px 70px;
+        background:
+            linear-gradient(
+                180deg,
+                #fafafa 0%,
+                #ffffff 55%
+            );
+    }
+    .edit-profile-wrapper {
+        width: 100%;
+        max-width: 920px;
+        margin: 0 auto;
+    }
+    /* PAGE INTRO*/
+    .profile-page-intro {
+        margin-bottom: 22px;
+    }
+    .profile-page-intro h1 {
+        margin: 0;
+        color: var(--airbnb-black);
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.6px;
+    }
+    .profile-page-intro p {
+        margin: 6px 0 0;
+        color: var(--airbnb-gray);
+        font-size: 14px;
+    }
+
+    /*  MAIN CARD*/
+    .edit-profile-card {
+        position: relative;
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid var(--airbnb-border);
+        border-radius: 24px;
+        box-shadow:
+            0 8px 28px rgba(0, 0, 0, 0.06);
+    }
+    /*  TOP COVER */
+    .rofile-cover {
+        height: 150px;
+        position: relative;
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(255, 56, 92, 0.22),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 80% 30%,
+                rgba(255, 56, 92, 0.12),
+                transparent 35%
+            ),
+            linear-gradient(
+                135deg,
+                #fff1f3,
+                #fff7f8 45%,
+                #ffffff
+            );
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .cover-decoration {
+        position: absolute;
+        right: 35px;
+        top: 25px;
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 56, 92, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 56, 92, 0.45);
+        font-size: 30px;
+    }
+    .cover-decoration::before {
+        content: "";
+        position: absolute;
+        width: 105px;
+        height: 105px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 56, 92, 0.08);
+    }
+    /*PROFILE BODY*/
+    .edit-profile-body {
+        padding: 0 44px 44px;
+    }
+    /* PROFILE HEADER */
+    .edit-profile-header {
+        position: relative;
+        margin-top: -58px;
+        text-align: center;
+        padding-bottom: 26px;
+    }
+    /*PROFILE IMAGE */
+    .profile-image {
+        width: 116px;
+        height: 116px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto 15px;
+        background: #ffffff;
+        border: 5px solid #ffffff;
+        box-shadow:
+            0 5px 18px rgba(0, 0, 0, 0.14);
+    }
+    .profile-placeholder {
+        width: 116px;
+        height: 116px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+            linear-gradient(
+                135deg,
+                #222222,
+                #484848
+            );
+        color: #ffffff;
+        font-size: 42px;
+        font-weight: 600;
+        border: 5px solid #ffffff;
+        box-shadow:
+            0 5px 18px rgba(0, 0, 0, 0.14);
+    }
+    .profile-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: #f0faf0;
+        color: var(--airbnb-green);
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 9px;
+    }
+    .profile-status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--airbnb-green);
+    }
+    .edit-profile-title {
+        margin: 0 0 7px;
+        color: var(--airbnb-black);
+        font-size: 27px;
+        line-height: 1.2;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+    }
+    .edit-profile-subtitle {
+        max-width: 460px;
+        margin: 0 auto;
+        color: var(--airbnb-gray);
+        font-size: 14px;
+        line-height: 1.5;
+    }
+ /*DIVIDER */
+    .profile-divider {
+        height: 1px;
+        background: #eeeeee;
+        margin-bottom: 28px;
+    }
+/*CONTENT GRID */
+    .profile-content-grid {
+        display: grid;
+        grid-template-columns: 0.75fr 1.25fr;
+        gap: 34px;
+        align-items: start;
+    }
+/*LEFT INFORMATION PANEL */
+    .profile-info-panel {
+        padding: 24px;
+        background: #fafafa;
+        border: 1px solid #eeeeee;
+        border-radius: 18px;
+    }
+    .info-panel-title {
+        margin: 0 0 18px;
+        color: var(--airbnb-black);
+        font-size: 17px;
+        font-weight: 600;
+    }
+    .info-item {
+        display: flex;
+        gap: 13px;
+        padding: 15px 0;
+        border-bottom: 1px solid #e9e9e9;
+    }
+    .info-item:first-of-type {
+        padding-top: 0;
+    }
+    .info-item:last-of-type {
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+    .info-icon {
+        flex: 0 0 36px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border: 1px solid #eeeeee;
+        color: var(--airbnb-black);
+        font-size: 14px;
+    }
+    .info-content strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--airbnb-black);
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .info-content span {
+        color: var(--airbnb-gray);
+        font-size: 12px;
+        line-height: 1.4;
+    }
+/*  FORM PANEL*/
+    .profile-form-panel {
+        padding: 0;
+    }
+    .form-section-title {
+        margin: 0 0 4px;
+        color: var(--airbnb-black);
+        font-size: 19px;
+        font-weight: 600;
+    }
+    .form-section-subtitle {
+        margin: 0 0 22px;
+        color: var(--airbnb-gray);
+        font-size: 13px;
+    }
+ /*FORM GROUP */
+    .profile-form-group {
+        margin-bottom: 20px;
+    }
+    .profile-form-label {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--airbnb-black);
+        font-size: 14px;
+        font-weight: 600;
+    }
+ /* TEXT INPUT */
+    .profile-input {
+        width: 100%;
+        min-height: 49px;
+        padding: 11px 14px;
+        border: 1px solid #b0b0b0;
+        border-radius: 10px;
+        background: #ffffff;
+        color: var(--airbnb-black);
+        font-size: 14px;
+        outline: none;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+    }
+    .profile-input:hover {
+        border-color: #777777;
+    }
+    .profile-input:focus {
+        border-color: #222222;
+        box-shadow:
+            0 0 0 1px #222222;
+    }
+    .profile-input::placeholder {
+        color: #9a9a9a;
+    }
+ /*FILE UPLOAD*/
+    .profile-upload-box {
+        position: relative;
+        padding: 16px;
+        border: 1px dashed #b0b0b0;
+        border-radius: 12px;
+        background: #fafafa;
+        transition:
+            background 0.2s ease,
+            border-color 0.2s ease;
+    }
+    .profile-upload-box:hover {
+        background: #f7f7f7;
+        border-color: #777777;
+    }
+    .profile-file-input {
+        width: 100%;
+        min-height: 42px;
+        padding: 7px 9px;
+        border: 1px solid #dddddd;
+        border-radius: 8px;
+        background: #ffffff;
+        color: var(--airbnb-black);
+        font-size: 13px;
+        cursor: pointer;
+    }
+    .profile-file-input:focus {
+        border-color: #222222;
+        box-shadow:
+            0 0 0 1px #222222;
+    }
+    .profile-help-text {
+        margin-top: 8px;
+        color: var(--airbnb-gray);
+        font-size: 12px;
+    }
+/* REMOVE PICTUR */
+    .remove-picture-wrapper {
+        margin-top: -5px;
+        margin-bottom: 22px;
+        text-align: center;
+    }
+    .remove-picture-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 35px;
+        padding: 0 14px;
+        border: 1px solid #dddddd;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #555555;
+        font-size: 12px;
+        font-weight: 600;
+        transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease;
+    }
+    .remove-picture-btn:hover {
+        background: #fff5f6;                                               
+        border-color: #ffb8c4;
+        color: var(--airbnb-red);
+    }
+/*FORM VALIDATION */
+    .profile-input.is-invalid {
+        border-color: #dc3545;
+    }
+    .invalid-feedback {
+        font-size: 12px;
+        margin-top: 6px;
+    }
+ /* ACTION BUTTONS*/
+    .profile-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid #eeeeee;
+    }
+    .save-profile-btn {
+        flex: 1;
+        min-height: 49px;
+        border: none;
+        border-radius: 10px;
+        background: var(--airbnb-red);
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+            background 0.2s ease,
+            transform 0.15s ease,
+            box-shadow 0.2s ease;
+    }
+    .save-profile-btn:hover {
+        background: var(--airbnb-red-dark);
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow:
+            0 5px 12px rgba(255, 56, 92, 0.20);
+    }
+    .save-profile-btn:active {
+        transform: scale(0.98);
+    }
+    .cancel-profile-btn {
+        min-height: 49px;
+        padding: 0 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #222222;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #222222;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition:
+            background 0.2s ease,
+            transform 0.15s ease;
+    }
+    .cancel-profile-btn:hover {
+        background: #f7f7f7;
+        color: #222222;
+        transform: translateY(-1px);
+    }
+ /*  SECURITY NOTE */
+    .profile-security-note {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 18px;
+        padding: 12px 14px;
+        background: #f8f8f8;
+        border-radius: 10px;
+        color: #717171;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+    .profile-security-note i {
+        margin-top: 2px;
+        color: #555555;
+    }
+/*RESPONSIVE*/
+    @media (max-width: 768px) {
+        .edit-profile-page {
+            padding: 18px 14px 50px;
+        }
+        .profile-page-intro {
+            margin-bottom: 16px;
+        }
+        .profile-page-intro h1 {
+            font-size: 24px;
+        }
+        .edit-profile-card {
+            border-radius: 20px;
+        }
+        .profile-cover {
+            height: 125px;
+        }
+        .edit-profile-body {
+            padding: 0 25px 30px;
+        }
+        .profile-content-grid {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+        .profile-info-panel {
+            order: 2;
+        }
+        .profile-form-panel {
+            order: 1;
+        }
+    }
+    @media (max-width: 576px) {
+        .edit-profile-page {
+            padding:
+                10px 10px 40px;
+        }
+        .profile-page-intro {
+            padding: 0 4px;
+        }
+        .profile-page-intro h1 {
+            font-size: 22px;
+        }
+        .profile-page-intro p {
+            font-size: 13px;
+        }
+        .profile-cover {
+            height: 110px;
+        }
+        .cover-decoration {
+            right: 18px;
+            top: 18px;
+            width: 58px;
+            height: 58px;
+            font-size: 22px;
+        }
+        .cover-decoration::before {
+            width: 80px;
+            height: 80px;
+        }
+        .edit-profile-body {
+            padding:
+                0 18px 25px;
+        }
+        .edit-profile-header {
+            margin-top: -47px;
+
+            padding-bottom: 22px;
+        }
+        .profile-image,
+        .profile-placeholder {
+            width: 94px;
+            height: 94px;
+            border-width: 4px;
+        }
+        .profile-placeholder {
+            font-size: 34px;
+        }
+        .edit-profile-title {
+            font-size: 23px;
+        }
+        .edit-profile-subtitle {
+            font-size: 13px;
+        }
+        .profile-info-panel {
+            padding: 20px;
+        }
+        .profile-actions {
+            flex-direction: column;
+        }
+        .save-profile-btn,
+        .cancel-profile-btn {
+            width: 100%;
+        }
+        .cancel-profile-btn {
+            padding: 0;
+        }
+    }
+</style>
+<!-- EDIT PROFILE PAGE-->
+<div class="edit-profile-page">
+    <div class="edit-profile-wrapper">
+        <div class="profile-page-intro">
+            <h1>
+                Account settings
+            </h1>
+            <p>
+                Manage your personal information and profile.
+            </p>
+        </div>
+        <div class="edit-profile-card">
+            <div class="profile-cover">
+                <div class="cover-decoration">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+            </div>
+            <div class="edit-profile-body">
+                <div class="edit-profile-header">
+                  <% if (user.profileImage && user.profileImage.url) { %>
+                    <img
+                        src="<%= user.profileImage.url %>"
+                        alt="Profile Picture"
+                        class="profile-image">
+                    <% } else { %>
+                    <div class="profile-placeholder">
+                       <%= user.username.charAt(0).toUpperCase() %>
+                    </div>
+                    <% } %>
+                    <div class="profile-status">
+                        <span class="profile-status-dot"></span>
+                        Account active
+                    </div>
+                    <h2 class="edit-profile-title">
+                        Edit Profile
+                    </h2>
+                    <p class="edit-profile-subtitle">
+                        Keep your Wanderlust profile up to date so
+                        your account information stays current.
+                    </p>
+                </div>
+                <% if (user.profileImage && user.profileImage.url) { %>
+                <div class="remove-picture-wrapper">
+                    <form
+                        action="/profile/image?_method=DELETE"
+                        method="POST">
+                        <button
+                            type="submit"
+                            class="remove-picture-btn">
+                            <i class="fa-solid fa-trash me-2"></i>
+                            Remove Picture
+                        </button>
+                    </form>
+                </div>
+                <% } %>
+                <div class="profile-divider"></div>
+                <div class="profile-content-grid">
+                 <div class="profile-info-panel">
+                        <h3 class="info-panel-title">
+                            Your account
+                        </h3>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="info-content">
+                                <strong>
+                                    Personal profile
+                                </strong>
+                                <span>
+                                    Your public account identity
+                                    on Wanderlust.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <strong>
+                                    Email address
+                                </strong>
+                                <span>
+                                    Used for account communication
+                                    and notifications.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                            <div class="info-content">
+                                <strong>
+                                    Profile picture
+                                </strong>
+                                <span>
+                                    Add a picture so your profile
+                                    feels more personal.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div class="info-content">
+                                <strong>
+                                    Your information
+                                </strong>
+                                <span>
+                                    Only update information that
+                                    belongs to your account.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-form-panel">
+                        <h3 class="form-section-title">
+                            Personal information
+                        </h3>
+                        <p class="form-section-subtitle">
+                            Update the details connected to your
+                            Wanderlust account.
+                        </p>
+                        <form
+                            action="/profile?_method=PUT"
+                            method="POST"
+                            enctype="multipart/form-data"
+                            class="needs-validation"
+                            novalidate>
+                            <div class="profile-form-group">
+                                <label
+                                    for="profileImage"
+                                    class="profile-form-label">
+                                    Profile Picture
+                                </label>
+                                <div class="profile-upload-box">
+                                    <input
+                                        type="file"
+                                        id="profileImage"
+                                        name="profileImage"
+                                        class="profile-file-input"
+                                        accept="image/png,image/jpeg,image/jpg">
+                                    <div class="profile-help-text">
+                                        JPG or PNG image recommended.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-form-group">
+                                <label
+                                    for="username"
+                                    class="profile-form-label">
+                                    Username
+                                </label>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    value="<%= user.username %>"
+                                    class="profile-input"
+                                    placeholder="Enter your username"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter a username.
+                                </div>
+                            </div>
+                            <div class="profile-form-group">
+                                <label
+                                    for="email"
+                                    class="profile-form-label">
+                                    Email
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value="<%= user.email || '' %>"
+                                    class="profile-input"
+                                    placeholder="Enter your email"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email.
+                                </div>
+                            </div>
+                            <div class="profile-actions">
+                                <button
+                                    type="submit"
+                                    class="save-profile-btn">
+                                    <i class="fa-solid fa-check me-2"></i>
+                                    Save Changes
+                                </button>
+                                <a
+                                    href="/profile"
+                                    class="cancel-profile-btn">
+                                    Cancel
+                                </a>
+                            </div>
+                            <div class="profile-security-note">
+                                <i class="fa-solid fa-lock"></i>
+                                <span>
+                                    Your profile information is used to manage
+                                    your Wanderlust account.
+                                    Make sure your email and username
+                                    are entered correctly before saving.
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (() => {
+        'use strict';
+        const forms =
+            document.querySelectorAll(
+                '.needs-validation'
+            );
+        Array
+            .from(forms)
+            .forEach(form => {
+                form.addEventListener(
+                    'submit',
+                    event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+
+                        }
+                        form.classList.add(
+                            'was-validated'
+                        );
+                    },
+                    false
+                );
+            });
+    })();
+</script>

@@ -1,0 +1,1067 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+
+  :root {
+    --wander-red: #ff385c;
+    --wander-red-dark: #e31c5f;
+    --wander-black: #222222;
+    --wander-gray: #717171;
+    --wander-border: #dddddd;
+    --wander-light: #f7f7f7;
+  }
+
+  .signup-page {
+    min-height: calc(100vh - 90px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 28px 24px 55px;
+
+    background:
+      radial-gradient(
+        circle at 85% 15%,
+        rgba(255, 56, 92, 0.055),
+        transparent 28%
+      ),
+      #ffffff;
+  }
+
+  .signup-wrapper {
+    width: 100%;
+    max-width: 1080px;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    background: #ffffff;
+
+    border: 1px solid var(--wander-border);
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    box-shadow:
+      0 18px 55px rgba(0, 0, 0, 0.09);
+  }
+
+  .signup-form-side {
+    padding: 46px 48px 42px;
+
+    background: #ffffff;
+  }
+  .signup-brand {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 30px;
+
+    color: var(--wander-red);
+
+    font-size: 21px;
+    font-weight: 700;
+
+    text-decoration: none;
+  }
+
+
+  .signup-brand:hover {
+    color: var(--wander-red-dark);
+  }
+
+
+  .signup-brand i {
+    font-size: 24px;
+  }
+  .signup-header {
+    margin-bottom: 28px;
+  }
+
+
+  .signup-header h1 {
+    margin: 0 0 9px;
+
+    color: var(--wander-black);
+
+    font-size: 32px;
+
+    line-height: 1.15;
+
+    font-weight: 700;
+
+    letter-spacing: -0.8px;
+  }
+
+
+  .signup-header p {
+    margin: 0;
+
+    max-width: 430px;
+
+    color: var(--wander-gray);
+
+    font-size: 15px;
+
+    line-height: 1.55;
+  }
+
+  .signup-field {
+    margin-bottom: 19px;
+  }
+
+
+  .signup-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--wander-black);
+
+    font-size: 14px;
+
+    font-weight: 600;
+  }
+
+
+  .signup-input-wrapper {
+    position: relative;
+  }
+
+
+  .signup-input {
+    width: 100%;
+
+    min-height: 50px;
+
+    padding: 12px 15px !important;
+
+    background: #ffffff !important;
+
+    border: 1px solid #b0b0b0 !important;
+
+    border-radius: 10px !important;
+
+    color: var(--wander-black);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+
+  .signup-input:hover {
+    border-color: #777777 !important;
+  }
+
+
+  .signup-input:focus {
+    border-color: #222222 !important;
+
+    box-shadow:
+      0 0 0 1px #222222 !important;
+  }
+
+
+  .signup-input::placeholder {
+    color: #999999;
+  }
+  .valid-feedback,
+  .invalid-feedback {
+    font-size: 12px;
+
+    margin-top: 6px;
+  }
+
+
+  .was-validated
+  .signup-input:valid {
+    border-color: #198754 !important;
+  }
+
+
+  .was-validated
+  .signup-input:invalid {
+    border-color: #dc3545 !important;
+  }
+  .password-note {
+    margin-top: 7px;
+
+    color: #8a8a8a;
+
+    font-size: 12px;
+  }
+
+  .signup-submit {
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 5px;
+
+    border: none !important;
+
+    border-radius: 10px !important;
+
+    background:
+      linear-gradient(
+        135deg,
+        #ff385c,
+        #e31c5f
+      ) !important;
+
+    color: #ffffff !important;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    box-shadow:
+      0 7px 18px rgba(255, 56, 92, 0.20);
+
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+
+  .signup-submit:hover {
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+      0 10px 23px rgba(255, 56, 92, 0.28);
+  }
+
+
+  .signup-submit:active {
+    transform: scale(0.98);
+  }
+
+  .signup-divider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin: 25px 0 20px;
+
+    color: #999999;
+
+    font-size: 12px;
+  }
+
+
+  .signup-divider::before,
+  .signup-divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: var(--wander-border);
+  }
+
+  .signup-login {
+    text-align: center;
+
+    color: var(--wander-gray);
+
+    font-size: 14px;
+  }
+
+
+  .signup-login a {
+    color: var(--wander-black) !important;
+
+    font-weight: 600;
+
+    text-decoration: underline !important;
+
+    text-underline-offset: 3px;
+
+    transition: color 0.2s ease;
+  }
+
+
+  .signup-login a:hover {
+    color: var(--wander-red) !important;
+  }
+
+  .signup-visual-side {
+    position: relative;
+
+    min-height: 600px;
+
+    padding: 42px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    overflow: hidden;
+
+    background:
+      linear-gradient(
+        145deg,
+        #ff385c 0%,
+        #e31c5f 42%,
+        #8f1749 100%
+      );
+  }
+
+
+  /* Decorative circles */
+
+  .signup-visual-side::before {
+    content: "";
+
+    position: absolute;
+
+    width: 330px;
+    height: 330px;
+
+    border-radius: 50%;
+
+    top: -130px;
+    right: -100px;
+
+    background:
+      rgba(255,255,255,0.10);
+  }
+
+
+  .signup-visual-side::after {
+    content: "";
+
+    position: absolute;
+
+    width: 240px;
+    height: 240px;
+
+    border-radius: 50%;
+
+    bottom: -100px;
+    left: -80px;
+
+    background:
+      rgba(255,255,255,0.08);
+  }
+  .visual-content {
+    position: relative;
+
+    z-index: 2;
+  }
+
+
+  .visual-small-label {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 12px;
+
+    margin-bottom: 23px;
+
+    border: 1px solid rgba(255,255,255,0.30);
+
+    border-radius: 50px;
+
+    background:
+      rgba(255,255,255,0.12);
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    backdrop-filter: blur(8px);
+  }
+
+
+  .visual-small-label i {
+    font-size: 11px;
+  }
+
+
+  .visual-content h2 {
+    max-width: 410px;
+
+    margin: 0 0 16px;
+
+    color: #ffffff;
+
+    font-size: 39px;
+
+    line-height: 1.08;
+
+    font-weight: 700;
+
+    letter-spacing: -1px;
+  }
+
+
+  .visual-content > p {
+    max-width: 390px;
+
+    margin: 0;
+
+    color:
+      rgba(255,255,255,0.88);
+
+    font-size: 15px;
+
+    line-height: 1.65;
+  }
+  .travel-features {
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 35px;
+  }
+
+
+  .travel-feature {
+    min-height: 125px;
+
+    padding: 17px 14px;
+
+    border:
+      1px solid rgba(255,255,255,0.20);
+
+    border-radius: 15px;
+
+    background:
+      rgba(255,255,255,0.11);
+
+    backdrop-filter: blur(12px);
+
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease;
+  }
+
+
+  .travel-feature:hover {
+    transform: translateY(-4px);
+
+    background:
+      rgba(255,255,255,0.17);
+  }
+
+
+  .feature-icon {
+    width: 36px;
+    height: 36px;
+
+    margin-bottom: 13px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+      rgba(255,255,255,0.18);
+
+    color: #ffffff;
+
+    font-size: 15px;
+  }
+
+
+  .travel-feature h4 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+  }
+
+
+  .travel-feature p {
+    margin: 0;
+
+    color:
+      rgba(255,255,255,0.75);
+
+    font-size: 11px;
+
+    line-height: 1.45;
+  }
+  .visual-bottom {
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 35px;
+
+    padding-top: 22px;
+
+    border-top:
+      1px solid rgba(255,255,255,0.22);
+  }
+
+
+  .visual-bottom p {
+    margin: 0;
+
+    color:
+      rgba(255,255,255,0.82);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+  }
+
+
+  .visual-bottom strong {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #ffffff;
+
+    font-size: 13px;
+  }
+  @media (max-width: 900px) {
+
+    .signup-wrapper {
+      grid-template-columns: 1fr;
+
+      max-width: 620px;
+    }
+
+
+    .signup-visual-side {
+      min-height: auto;
+
+      padding: 36px;
+    }
+
+
+    .visual-content h2 {
+      font-size: 32px;
+    }
+
+
+    .travel-features {
+      margin-top: 28px;
+    }
+
+  }
+
+
+  @media (max-width: 576px) {
+
+    .signup-page {
+      min-height: auto;
+
+      padding:
+        12px
+        12px
+        35px;
+    }
+
+
+    .signup-wrapper {
+      border-radius: 18px;
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+    }
+
+
+    .signup-form-side {
+      padding:
+        28px
+        21px
+        30px;
+    }
+
+
+    .signup-brand {
+      margin-bottom: 25px;
+
+      font-size: 19px;
+    }
+
+
+    .signup-header {
+      margin-bottom: 24px;
+    }
+
+
+    .signup-header h1 {
+      font-size: 27px;
+    }
+
+
+    .signup-header p {
+      font-size: 13px;
+    }
+
+
+    .signup-visual-side {
+      padding: 30px 24px;
+    }
+
+
+    .visual-content h2 {
+      font-size: 29px;
+    }
+
+
+    .visual-content > p {
+      font-size: 14px;
+    }
+
+
+    .travel-features {
+      grid-template-columns:
+        1fr;
+
+      gap: 9px;
+    }
+
+
+    .travel-feature {
+      min-height: auto;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 13px;
+    }
+
+
+    .feature-icon {
+      flex: 0 0 auto;
+
+      margin: 0;
+    }
+
+
+    .visual-bottom {
+      margin-top: 25px;
+    }
+
+  }
+
+</style>
+<div class="signup-page">
+
+
+  <div class="signup-wrapper">
+    <section class="signup-form-side">
+
+
+      <!-- BRAND -->
+
+      <a
+        href="/listings"
+        class="signup-brand"
+      >
+
+        <i class="fa-brands fa-airbnb"></i>
+
+        <span>Wanderlust</span>
+
+      </a>
+
+
+      <!-- HEADER -->
+
+      <div class="signup-header">
+
+        <h1>
+          Create your account
+        </h1>
+
+        <p>
+          Join Wanderlust and discover unique stays,
+          beautiful destinations, and unforgettable
+          travel experiences.
+        </p>
+
+      </div>
+      <form
+        action="/signup"
+        method="POST"
+        novalidate
+        class="needs-validation"
+      >
+
+
+        <!-- USERNAME -->
+
+        <div class="signup-field">
+
+          <label
+            for="username"
+            class="signup-label"
+          >
+            Username
+          </label>
+
+
+          <div class="signup-input-wrapper">
+
+            <input
+              id="username"
+              name="username"
+              type="text"
+              class="form-control signup-input"
+              placeholder="Choose a unique username"
+              required
+            >
+
+          </div>
+
+
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+
+          <div class="invalid-feedback">
+            Please choose a username.
+          </div>
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="signup-field">
+
+          <label
+            for="email"
+            class="signup-label"
+          >
+            Email
+          </label>
+
+
+          <div class="signup-input-wrapper">
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="form-control signup-input"
+              placeholder="Enter your email address"
+              required
+            >
+
+          </div>
+
+
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+
+          <div class="invalid-feedback">
+            Please enter a valid email address.
+          </div>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="signup-field">
+
+          <label
+            for="password"
+            class="signup-label"
+          >
+            Password
+          </label>
+
+
+          <div class="signup-input-wrapper">
+
+            <input
+              id="password"
+              name="password"
+              type="password"
+              class="form-control signup-input"
+              placeholder="Create a strong password"
+              required
+            >
+
+          </div>
+
+
+          <div class="password-note">
+            Choose a password you can remember securely.
+          </div>
+
+
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+
+          <div class="invalid-feedback">
+            Please enter a password.
+          </div>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <button
+          type="submit"
+          class="btn signup-submit"
+        >
+
+          Create my account
+
+        </button>
+
+
+        <!-- DIVIDER -->
+
+        <div class="signup-divider">
+          or
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div class="signup-login">
+
+          Already have an account?
+
+          <a href="/login">
+            Log in
+          </a>
+
+        </div>
+
+
+      </form>
+
+
+    </section>
+    <section class="signup-visual-side">
+
+
+      <div class="visual-content">
+
+
+        <!-- SMALL LABEL -->
+
+        <div class="visual-small-label">
+
+          <i class="fa-solid fa-sparkles"></i>
+
+          <span>
+            Your next adventure starts here
+          </span>
+
+        </div>
+
+
+        <!-- MAIN MESSAGE -->
+
+        <h2>
+          Stay somewhere that feels like you.
+        </h2>
+
+
+        <p>
+          From peaceful mountain escapes to vibrant
+          city stays, Wanderlust helps you find places
+          worth remembering.
+        </p>
+
+
+        <!-- FEATURE CARDS -->
+
+        <div class="travel-features">
+
+
+          <!-- EXPLORE -->
+
+          <div class="travel-feature">
+
+            <div class="feature-icon">
+
+              <i class="fa-solid fa-compass"></i>
+
+            </div>
+
+            <div>
+
+              <h4>
+                Explore
+              </h4>
+
+              <p>
+                Discover unique places.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- HOST -->
+
+          <div class="travel-feature">
+
+            <div class="feature-icon">
+
+              <i class="fa-solid fa-house"></i>
+
+            </div>
+
+            <div>
+
+              <h4>
+                Host
+              </h4>
+
+              <p>
+                Share your special space.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- SAVE -->
+
+          <div class="travel-feature">
+
+            <div class="feature-icon">
+
+              <i class="fa-solid fa-heart"></i>
+
+            </div>
+
+            <div>
+
+              <h4>
+                Save
+              </h4>
+
+              <p>
+                Keep your favorites close.
+              </p>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+      <!-- BOTTOM QUOTE -->
+
+      <div class="visual-bottom">
+
+        <p>
+          “Travel is about the places you go
+          and the memories you bring home.”
+        </p>
+
+        <strong>
+          — Wanderlust
+        </strong>
+
+      </div>
+
+
+    </section>
+
+
+  </div>
+
+</div>
+
+<script>
+
+  (() => {
+
+    'use strict';
+
+
+    const forms =
+      document.querySelectorAll(
+        '.needs-validation'
+      );
+
+
+    Array
+      .from(forms)
+      .forEach(form => {
+
+        form.addEventListener(
+          'submit',
+          event => {
+
+            if (!form.checkValidity()) {
+
+              event.preventDefault();
+
+              event.stopPropagation();
+
+            }
+
+
+            form.classList.add(
+              'was-validated'
+            );
+
+          },
+          false
+        );
+
+      });
+
+  })();
+
+</script>

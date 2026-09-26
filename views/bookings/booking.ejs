@@ -1,0 +1,467 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+
+    .booking-page {
+        min-height: 80vh;
+        padding: 3rem 0;
+    }
+
+    .booking-card {
+        border: none;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .booking-image {
+        width: 100%;
+        height: 100%;
+        min-height: 430px;
+        object-fit: cover;
+    }
+
+    .booking-details {
+        padding: 2rem;
+    }
+
+    .booking-title {
+        font-weight: 700;
+        color: #222;
+    }
+
+    .booking-location {
+        color: #717171;
+    }
+
+    .price {
+        color: #ff385c;
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+
+    .price-box {
+        background: #f8f9fa;
+        border-radius: 1rem;
+        padding: 1.2rem;
+    }
+
+    .date-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #555;
+        margin-bottom: 0.4rem;
+    }
+
+    .booking-input {
+        border: 1px solid #ddd;
+        border-radius: 0.75rem;
+        padding: 0.75rem;
+    }
+
+    .booking-input:focus {
+        border-color: #ff385c;
+        box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.1);
+    }
+
+    .reserve-btn {
+        background-color: #ff385c;
+        border: none;
+        color: white;
+        font-weight: 700;
+        padding: 0.85rem;
+        border-radius: 999px;
+        transition: 0.2s ease;
+    }
+
+    .reserve-btn:hover {
+        background-color: #e31c5f;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .back-link {
+        color: #222;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .back-link:hover {
+        color: #ff385c;
+    }
+
+</style>
+
+
+<div class="container booking-page">
+
+    <!-- BACK -->
+    <div class="mb-4">
+
+        <a
+            href="/listings/<%= listing._id %>"
+            class="back-link"
+        >
+            <i class="fa-solid fa-arrow-left me-2"></i>
+            Back to listing
+        </a>
+
+    </div>
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="card booking-card">
+
+                <div class="row g-0">
+                    <div class="col-lg-5">
+
+                        <img
+                            src="<%= listing.image.url %>"
+                            alt="<%= listing.title %>"
+                            class="booking-image"
+                        >
+
+                    </div>
+                    <div class="col-lg-7">
+
+                        <div class="booking-details">
+
+
+                            <!-- TITLE -->
+
+                            <h2 class="booking-title mb-2">
+                                <%= listing.title %>
+                            </h2>
+
+
+                            <!-- LOCATION -->
+
+                            <p class="booking-location mb-4">
+
+                                <i class="fa-solid fa-location-dot me-1 text-danger"></i>
+
+                                <%= listing.location %>,
+                                <%= listing.country %>
+
+                            </p>
+
+
+                            <hr>
+
+
+                            <!-- PRICE -->
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                                <span class="text-muted">
+                                    Price per night
+                                </span>
+
+                                <span class="price">
+
+                                    Rs.
+                                    <%= listing.price.toLocaleString("en-PK") %>
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- BOOKING FORM -->
+
+                            <form
+                                action="/listings/<%= listing._id %>/bookings"
+                                method="POST"
+                                id="bookingForm"
+                                class="needs-validation"
+                                novalidate
+                            >
+
+
+                                <!-- DATES -->
+
+                                <div class="row g-3 mb-4">
+
+
+                                    <!-- CHECK IN -->
+
+                                    <div class="col-md-6">
+
+                                        <label
+                                            for="checkIn"
+                                            class="date-label"
+                                        >
+                                            CHECK-IN
+                                        </label>
+
+                                        <input
+                                            type="date"
+                                            id="checkIn"
+                                            name="booking[checkIn]"
+                                            class="form-control booking-input"
+                                            min="<%= new Date().toISOString().split('T')[0] %>"
+                                            required
+                                        >
+
+                                        <div class="invalid-feedback">
+                                            Please select your check-in date.
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- CHECK OUT -->
+
+                                    <div class="col-md-6">
+
+                                        <label
+                                            for="checkOut"
+                                            class="date-label"
+                                        >
+                                            CHECK-OUT
+                                        </label>
+
+                                        <input
+                                            type="date"
+                                            id="checkOut"
+                                            name="booking[checkOut]"
+                                            class="form-control booking-input"
+                                            min="<%= new Date().toISOString().split('T')[0] %>"
+                                            required
+                                        >
+
+                                        <div class="invalid-feedback">
+                                            Please select your check-out date.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- PRICE SUMMARY -->
+
+                                <div class="price-box mb-4">
+
+                                    <div class="d-flex justify-content-between mb-2">
+
+                                        <span class="text-muted">
+                                            <span id="nightCount">0</span>
+                                            nights
+                                        </span>
+
+                                        <span id="nightPrice">
+                                            Rs. 0
+                                        </span>
+
+                                    </div>
+
+
+                                    <hr>
+
+
+                                    <div class="d-flex justify-content-between fw-bold">
+
+                                        <span>
+                                            Total
+                                        </span>
+
+                                        <span
+                                            id="totalPrice"
+                                            class="price"
+                                        >
+                                            Rs. 0
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- RESERVE -->
+
+                                <button
+                                    type="submit"
+                                    class="btn reserve-btn w-100"
+                                >
+
+                                    <i class="fa-solid fa-bolt me-2"></i>
+
+                                    Confirm & Reserve
+
+                                </button>
+
+
+                            </form>
+
+
+                            <p class="text-muted small text-center mt-3 mb-0">
+
+                                You won't be charged until your booking is confirmed.
+
+                            </p>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const checkIn =
+        document.getElementById("checkIn");
+
+    const checkOut =
+        document.getElementById("checkOut");
+
+    const nightCount =
+        document.getElementById("nightCount");
+
+    const nightPrice =
+        document.getElementById("nightPrice");
+
+    const totalPrice =
+        document.getElementById("totalPrice");
+
+
+    const pricePerNight =
+        <%= listing.price %>;
+
+
+    function calculatePrice() {
+
+        if (!checkIn.value || !checkOut.value) {
+
+            nightCount.innerText = "0";
+
+            nightPrice.innerText = "Rs. 0";
+
+            totalPrice.innerText = "Rs. 0";
+
+            return;
+        }
+
+
+        const start =
+            new Date(checkIn.value);
+
+        const end =
+            new Date(checkOut.value);
+
+
+        const millisecondsPerDay =
+            1000 * 60 * 60 * 24;
+
+
+        const nights =
+            Math.ceil(
+                (end - start) /
+                millisecondsPerDay
+            );
+
+
+        if (nights <= 0) {
+
+            nightCount.innerText = "0";
+
+            nightPrice.innerText = "Rs. 0";
+
+            totalPrice.innerText = "Rs. 0";
+
+            return;
+        }
+
+
+        const total =
+            nights * pricePerNight;
+
+
+        nightCount.innerText =
+            nights;
+
+
+        nightPrice.innerText =
+            "Rs. " +
+            total.toLocaleString("en-PK");
+
+
+        totalPrice.innerText =
+            "Rs. " +
+            total.toLocaleString("en-PK");
+
+    }
+
+
+    checkIn.addEventListener(
+        "change",
+        function () {
+
+            checkOut.min =
+                this.value;
+
+            if (
+                checkOut.value &&
+                checkOut.value <= this.value
+            ) {
+
+                checkOut.value = "";
+
+            }
+
+            calculatePrice();
+
+        }
+    );
+
+
+    checkOut.addEventListener(
+        "change",
+        calculatePrice
+    );
+
+
+    // Bootstrap validation
+
+    (() => {
+
+        "use strict";
+
+        const form =
+            document.getElementById("bookingForm");
+
+
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+                if (!form.checkValidity()) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                }
+
+                form.classList.add(
+                    "was-validated"
+                );
+
+            }
+        );
+
+    })();
+
+</script>
