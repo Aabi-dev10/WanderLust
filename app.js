@@ -64,6 +64,8 @@ mongoose.set(
     false
 );
 
+app.set("trust proxy", 1);
+
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
