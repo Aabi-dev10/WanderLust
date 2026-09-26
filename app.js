@@ -19,7 +19,9 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/booking.js");
+
 const dbUrl = process.env.ATLASDB_URL;
+
 main()
     .then(() => {
         console.log("connected to db");
@@ -31,33 +33,37 @@ main()
 async function main() {
     await mongoose.connect(dbUrl);
 }
+
 app.engine("ejs", ejsMate);
+
 app.set("view engine", "ejs");
+
 app.set(
     "views",
     path.join(__dirname, "views")
 );
+
 app.use(
     express.urlencoded({
         extended: true
     })
 );
-// Method override
+
 app.use(
     methodOverride("_method")
 );
-// Static files
+
 app.use(
     express.static(
         path.join(__dirname, "public")
     )
 );
-// Mongoose settings
+
 mongoose.set(
     "strictPopulate",
     false
 );
-// SESSION STORE
+
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
@@ -65,7 +71,7 @@ const store = MongoStore.create({
     },
     touchAfter: 24 * 3600
 });
-// Session store error handler
+
 store.on(
     "error",
     (err) => {
@@ -75,7 +81,7 @@ store.on(
         );
     }
 );
-// SESSION OPTIONS
+
 const sessionOptions = {
     store,
     secret: process.env.SECRET,
@@ -89,54 +95,60 @@ const sessionOptions = {
             process.env.NODE_ENV === "production"
     }
 };
+
 app.use(
     session(sessionOptions)
 );
+
 app.use(
     flash()
 );
-// PASSPORT
+
 app.use(
     passport.initialize()
 );
+
 app.use(
     passport.session()
 );
 
-// Local Strategy
 passport.use(
     new LocalStrategy(
         User.authenticate()
     )
 );
-// Serialize User
+
 passport.serializeUser(
     User.serializeUser()
 );
-// Deserialize User
+
 passport.deserializeUser(
     User.deserializeUser()
 );
-// GLOBAL LOCALS
+
 app.use(
     (req, res, next) => {
 
-        // Success messages
         res.locals.success =
             req.flash("success");
 
-        // Error messages
         res.locals.error =
             req.flash("error");
 
-        // Current user
         res.locals.currUser =
             req.user || null;
 
         next();
     }
 );
-// ROUTES
+
+app.get(
+    "/",
+    (req, res) => {
+        res.redirect("/listings");
+    }
+);
+
 app.use(
     "/listings",
     listingsRouter
@@ -156,7 +168,7 @@ app.use(
     "/listings",
     bookingRouter
 );
-// STATIC PAGES
+
 app.get(
     "/privacy",
     (req, res) => {
@@ -189,7 +201,7 @@ app.get(
 
     }
 );
-// 404 ERROR
+
 app.all(
     "/{*splat}",
     (req, res, next) => {
@@ -203,7 +215,7 @@ app.all(
 
     }
 );
-// ERROR HANDLER
+
 app.use(
     (err, req, res, next) => {
 
@@ -227,8 +239,9 @@ app.use(
 
     }
 );
-// SERVER
+
 const PORT = process.env.PORT || 8080;
+
 app.listen(
     PORT,
     () => {
@@ -239,4 +252,3 @@ app.listen(
 
     }
 );
-
